@@ -115,7 +115,7 @@ export const popoutCSS = webpackify(
         }
 
         .userPopout .headerName {
-            color: var(--white);
+            color: var(--header-primary);
             font-weight: 600;
             white-space: normal;
             text-align: center;
@@ -161,7 +161,7 @@ export const popoutCSS = webpackify(
         }
 
         .userPopout .flexHorizontal:only-child .nameDisplay {
-            color: var(--white);
+            color: var(--header-primary);
             font-weight: 600;
         }
 
