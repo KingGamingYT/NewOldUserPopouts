@@ -595,7 +595,7 @@ export const popoutCSS = webpackify(
         }
 
         .activityUserPopout .assets .assetsLargeImageUserPopout path {
-            transform: scale(3.65) !important;
+            transform: scale(2.55) !important;
         }
 
         .activityUserPopout .assets svg.assetsSmallImageUserPopout {
