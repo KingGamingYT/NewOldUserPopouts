@@ -12,7 +12,9 @@ const styles = Object.assign(
     Webpack.getByKeys('container', 'bar', 'progress'),
     Webpack.getByKeys('outer', 'overlay'),
     Webpack.getByKeys('root', 'pill', 'expandButton'),
-    Webpack.getByKeys('inlineContainer', 'themedBackground')
+    Webpack.getByKeys('inlineContainer', 'themedBackground'),
+    Webpack.getByKeys('badgeContainer', 'badgesContainer'),
+    Webpack.getByKeys('tabularNumbers'),
 );
 
 export const popoutCSS = webpackify(
@@ -663,7 +665,7 @@ export const popoutCSS = webpackify(
             .avatarWrapper rect {
                 fill: #fff;
             }
-            .nameDisplay, .discriminator, .userTag, .customStatus {
+            .headerName, .nameDisplay, .discriminator, .userTag, .customStatus {
                 color: var(--white) !important;
             }
             .botTag {
