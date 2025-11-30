@@ -48,10 +48,10 @@ export const popoutCSS = webpackify(
             background: var(--custom-theme-base-color, var(--background-secondary, var(--background-base-lower))) !important;
         }
 
-        .custom-theme-background .theme-dark, .theme-dark.custom-theme-background {
+        .custom-theme-background:is(.user-profile-popout) .theme-dark, .theme-dark.custom-theme-background:is(.user-profile-popout) {
             --custom-theme-base-color: var(--custom-user-profile-theme-color-blend, var(--theme-base-color-dark)) !important;
         }
-        .custom-theme-background .theme-light, .theme-light.custom-theme-background {
+        .custom-theme-background:is(.user-profile-popout) .theme-light, .theme-light.custom-theme-background:is(.user-profile-popout) {
             --custom-theme-base-color: var(--custom-user-profile-theme-color-blend, var(--theme-base-color-light)) !important;
         }
 
