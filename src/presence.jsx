@@ -1,3 +1,4 @@
+import { Utils } from 'betterdiscord';
 import { 
     ApplicationStore,
     ChannelStore, 
@@ -71,6 +72,7 @@ function ActivityCard({user, activity, check}) {
     }, [gameId]);
 
     const game = DetectableGameSupplementalStore.getGame(gameId);
+    const application = ApplicationStore.getApplication(activity?.application_id);
 
     return (
         <>
@@ -134,13 +136,13 @@ function ActivityCard({user, activity, check}) {
                             style={{ width: "40px", height: "40px" }}
                             src=
                             {
-                                'https://cdn.discordapp.com/app-icons/' + activity.application_id + '/' + ApplicationStore.getApplication(activity?.application_id)?.icon + ".png"
+                                'https://cdn.discordapp.com/app-icons/' + activity.application_id + '/' + application?.icon + ".png"
                             }
                             onError={ () => (setShouldLargeFallback(true))}
                         />   
                     }
                     {
-                        !(user.bot || activity?.assets || activity?.application_id || ApplicationStore.getApplication(activity?.application_id)?.icon) && 
+                        !(user.bot || activity?.assets || activity?.application_id || application?.icon) && 
                         <FallbackAsset style={{ width: "40px", height: "40px" }} />
                     }
                     {
@@ -161,7 +163,7 @@ function ActivityCard({user, activity, check}) {
                         </TooltipBuilder> 
                     }
                 </div>
-                <div className={activity?.assets ? "contentImagesUserPopout content" : "contentGameImageUserPopout content"} style={{ display: "grid", flex: "1", marginBottom: "3px" }}>
+                <div className={Utils.className(activity?.assets ? "contentImagesUserPopout" : application?.icon ? "contentGameImageUserPopout" : "contentNoImagesUserPopout", "content")} style={{ display: "grid", flex: "1", marginBottom: "3px" }}>
                     <div className="nameNormal textRow ellipsis" style={{ fontWeight: "600" }}>{(check?.listening || check?.watching) && ([2, 3].includes(activity?.type)) ? activity.details : activity.name}</div>
                     { !(filterCheck?.listening || filterCheck?.watching) && <div className="details textRow ellipsis">{activity.details}</div> }
                     <div className="state textRow ellipsis">

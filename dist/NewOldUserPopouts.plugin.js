@@ -169,6 +169,7 @@ function ActivityCard({ user, activity, check }) {
 		})();
 	}, [gameId]);
 	const game = DetectableGameSupplementalStore.getGame(gameId);
+	const application = ApplicationStore.getApplication(activity?.application_id);
 	return BdApi.React.createElement(BdApi.React.Fragment, null, BdApi.React.createElement("h3", { className: "headerTextNormal headerText size12", style: { color: "var(--white)", marginBottom: "8px" } }, (check?.listening || check?.watching) && [2, 3].includes(activity?.type) ? headers[activity.type] + activity?.name : filterCheck?.xbox || filterCheck?.playstation ? intl.intl.formatToPlainString(intl.t["A17aM8"], { platform: activity?.platform }) : headers[activity.type]), BdApi.React.createElement("div", { className: activity?.assets ? "bodyAlignCenter" : "bodyNormal", style: { display: "flex", alignItems: "center", width: "auto" } }, BdApi.React.createElement(
 		"div",
 		{
@@ -218,11 +219,11 @@ function ActivityCard({ user, activity, check }) {
 			{
 				className: "gameIcon",
 				style: { width: "40px", height: "40px" },
-				src: "https://cdn.discordapp.com/app-icons/" + activity.application_id + "/" + ApplicationStore.getApplication(activity?.application_id)?.icon + ".png",
+				src: "https://cdn.discordapp.com/app-icons/" + activity.application_id + "/" + application?.icon + ".png",
 				onError: () => setShouldLargeFallback(true)
 			}
 		),
-		!(user.bot || activity?.assets || activity?.application_id || ApplicationStore.getApplication(activity?.application_id)?.icon) && BdApi.React.createElement(FallbackAsset, { style: { width: "40px", height: "40px" } }),
+		!(user.bot || activity?.assets || activity?.application_id || application?.icon) && BdApi.React.createElement(FallbackAsset, { style: { width: "40px", height: "40px" } }),
 		activity?.assets && activity?.assets?.large_image && activity?.assets?.small_image && BdApi.React.createElement(TooltipBuilder, { note: activity.assets.small_text || activity?.details }, shouldSmallFallback ? BdApi.React.createElement(FallbackAsset, { className: "assetsSmallImage assetsSmallImageUserPopout" }) : BdApi.React.createElement(
 			"img",
 			{
@@ -233,7 +234,7 @@ function ActivityCard({ user, activity, check }) {
 				onError: () => setShouldSmallFallback(true)
 			}
 		))
-	), BdApi.React.createElement("div", { className: activity?.assets ? "contentImagesUserPopout content" : "contentGameImageUserPopout content", style: { display: "grid", flex: "1", marginBottom: "3px" } }, BdApi.React.createElement("div", { className: "nameNormal textRow ellipsis", style: { fontWeight: "600" } }, (check?.listening || check?.watching) && [2, 3].includes(activity?.type) ? activity.details : activity.name), !(filterCheck?.listening || filterCheck?.watching) && BdApi.React.createElement("div", { className: "details textRow ellipsis" }, activity.details), BdApi.React.createElement("div", { className: "state textRow ellipsis" }, activity?.party && activity?.party?.size ? activity.state + " (" + activity.party.size[0] + " of " + activity.party.size[1] + ")" : activity.state), activity?.timestamps?.end ? BdApi.React.createElement("div", { className: "mediaProgressBarContainer" }, BdApi.React.createElement(MediaProgressBar, { start: activity?.timestamps?.start || activity?.created_at, end: activity?.timestamps?.end })) : BdApi.React.createElement(ActivityTimer, { activity }))), BdApi.React.createElement("div", { className: "buttonsWrapper actionsUserPopout" }, BdApi.React.createElement(ActivityButtons, { user, activity })));
+	), BdApi.React.createElement("div", { className: betterdiscord.Utils.className(activity?.assets ? "contentImagesUserPopout" : application?.icon ? "contentGameImageUserPopout" : "contentNoImagesUserPopout", "content"), style: { display: "grid", flex: "1", marginBottom: "3px" } }, BdApi.React.createElement("div", { className: "nameNormal textRow ellipsis", style: { fontWeight: "600" } }, (check?.listening || check?.watching) && [2, 3].includes(activity?.type) ? activity.details : activity.name), !(filterCheck?.listening || filterCheck?.watching) && BdApi.React.createElement("div", { className: "details textRow ellipsis" }, activity.details), BdApi.React.createElement("div", { className: "state textRow ellipsis" }, activity?.party && activity?.party?.size ? activity.state + " (" + activity.party.size[0] + " of " + activity.party.size[1] + ")" : activity.state), activity?.timestamps?.end ? BdApi.React.createElement("div", { className: "mediaProgressBarContainer" }, BdApi.React.createElement(MediaProgressBar, { start: activity?.timestamps?.start || activity?.created_at, end: activity?.timestamps?.end })) : BdApi.React.createElement(ActivityTimer, { activity }))), BdApi.React.createElement("div", { className: "buttonsWrapper actionsUserPopout" }, BdApi.React.createElement(ActivityButtons, { user, activity })));
 }
 function VoiceCards({ voice, stream }) {
 	const channel = useStateFromStores([ChannelStore], () => ChannelStore.getChannel(voice));
