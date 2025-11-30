@@ -163,7 +163,7 @@ function ActivityCard({user, activity, check}) {
                         </TooltipBuilder> 
                     }
                 </div>
-                <div className={Utils.className(activity?.assets ? "contentImagesUserPopout" : application?.icon ? "contentGameImageUserPopout" : "contentNoImagesUserPopout", "content")} style={{ display: "grid", flex: "1", marginBottom: "3px" }}>
+                <div className={Utils.className(activity?.assets ? "contentImagesUserPopout" : (application || activity?.timestamps) ? "contentGameImageUserPopout" : "contentNoImagesUserPopout", "content")} style={{ display: "grid", flex: "1", marginBottom: "3px" }}>
                     <div className="nameNormal textRow ellipsis" style={{ fontWeight: "600" }}>{(check?.listening || check?.watching) && ([2, 3].includes(activity?.type)) ? activity.details : activity.name}</div>
                     { !(filterCheck?.listening || filterCheck?.watching) && <div className="details textRow ellipsis">{activity.details}</div> }
                     <div className="state textRow ellipsis">
