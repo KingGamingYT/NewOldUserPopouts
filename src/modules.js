@@ -1,4 +1,4 @@
-import { Webpack, Patcher } from 'betterdiscord';
+import { Webpack, Patcher, ReactUtils } from 'betterdiscord';
 import { lazy } from 'react';
 
 export const [
@@ -9,9 +9,9 @@ export const [
     AvatarFetch,
     EmojiRenderer,
     FetchGames,
+    RoleAddPopout,
     RoleRenderer,
     RolePermissionCheck,
-    RoleAddButton,
     RoleUpdater,
     MarkdownRenderer,
     MediaProgressBar,
@@ -21,6 +21,7 @@ export const [
     Tooltip,
     TagGuildRenderer,
     Popout,
+    PopoutContainer,
     SpotifyButtons,
     CallButtons,
     VoiceBox, 
@@ -38,9 +39,9 @@ export const [
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('displayProfile', 'onOpenProfile', 'animateOnHover', 'previewStatus') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('translateSurrogatesToInlineEmoji') },
     { filter: /* @__PURE__ */ Webpack.Filters.byKeys('getDetectableGamesSupplemental') },
+    { filter: /* @__PURE__ */ Webpack.Filters.byStrings('popoutRoleDot', 'getSortedRoles'), searchExports: true },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('role', 'canRemove', 'unsafe_rawColors.PRIMARY_300') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('.ADMINISTRATOR', '.MANAGE_MESSAGES') },
-    { filter: /* @__PURE__ */ Webpack.Filters.byStrings('guildMember','numRoles','highestRole','onAddRole') },
     { filter: /* @__PURE__ */ x=>x.updateMemberRoles },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('userBio', 'className', '.parseBioReact') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('start', 'end', 'duration', 'percentage') },
@@ -50,6 +51,7 @@ export const [
     { filter: /* @__PURE__ */ Webpack.Filters.byPrototypeKeys(("renderTooltip")), searchExports: true  },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('guildId', 'name', 'setPopoutRef', 'onClose', 'fetchGuildProfile') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings("Unsupported animation config:"), searchExports: true },
+    { filter: /* @__PURE__ */ Webpack.Filters.byStrings('type', 'position', 'data-popout-animating'), searchExports: true },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('activity', 'PRESS_PLAY_ON_SPOTIFY_BUTTON') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('PRESS_JOIN_CALL_BUTTON') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('users', 'channel', 'themeType') },
@@ -69,6 +71,8 @@ export const RelationshipStore = /* @__PURE__ */ Webpack.getStore('RelationshipS
 export const GuildStore = /* @__PURE__ */ Webpack.getStore("GuildStore");
 export const GuildMemberStore = /* @__PURE__ */ Webpack.getStore('GuildMemberStore');
 export const GuildRoleStore = /* @__PURE__ */ Webpack.getStore('GuildRoleStore');
+export const PermissionStore = /* @__PURE__ */ Webpack.getStore('PermissionStore');
+export const SelectedGuildStore = /* @__PURE__ */ Webpack.getStore('SelectedGuildStore');
 export const StreamStore = /* @__PURE__ */ Webpack.getStore('ApplicationStreamingStore');
 export const UserStore = /* @__PURE__ */ Webpack.getStore('UserStore');
 export const UserProfileStore = /* @__PURE__ */ Webpack.getStore('UserProfileStore');
@@ -77,6 +81,7 @@ export const VoiceStateStore = /* @__PURE__ */  Webpack.getStore('VoiceStateStor
 export const { useStateFromStores } = /* @__PURE__ */ Webpack.getMangled(m => m.Store, {
         useStateFromStores: /* @__PURE__ */ Webpack.Filters.byStrings("useStateFromStores")
     }, { raw: true });
+    
 export const UserNote = lazy(() => {
     const modalModule = /* @__PURE__ */ Webpack.getMangled("onCloseRequest:null==", {
         openModalLazy: /* @__PURE__ */ Webpack.Filters.byRegex(/^async function/)

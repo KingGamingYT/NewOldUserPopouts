@@ -11,7 +11,7 @@ import {
     MarkdownRenderer,
     MessageBar,
     ModalAccessUtils,
-    RoleAddButton,
+    RoleAddPopout,
     RolePermissionCheck,
     RoleRenderer,
     RoleUpdater,
@@ -20,6 +20,8 @@ import {
     Tooltip,
     TagGuildRenderer,
     Popout,
+    PopoutContainer,
+    PermissionStore,
     UserNote,
     useStateFromStores,
     VoiceStateStore
@@ -145,6 +147,44 @@ function ClanTagBuilder({user}) {
     )
 }
 
+function RoleAddButton({guild, highestRole, onAddRole, buttonRef}) {
+    const [showPopout, setShowPopout] = useState(false);
+
+    if (!RolePermissionCheck({guildId: guild.id}).canRemove) {
+        return;
+    }
+
+    return (
+        <Popout
+            targetElementRef={buttonRef}
+            clickTrap={true}
+            onRequestClose={() => setShowPopout(false)}
+            renderPopout={() => <PopoutContainer position="top"><RoleAddPopout 
+                    guild={guild}
+                    onSelect={onAddRole} 
+                    onClose={() => setShowPopout(false)}
+                    roleStyle="username"  
+                    roleFilter={(role) => !role.managed && PermissionStore.isRoleHigher(guild, highestRole, role) && role.id !== guild.id}
+                />
+            </PopoutContainer>}
+            position="top"
+            shouldShow={showPopout}>
+            {(props) => <span
+                {...props}
+                ref={buttonRef}
+                onClick={() => { setShowPopout(true) }}>
+                <TooltipBuilder note={intl.intl.formatToPlainString(intl.t['ljnBlo'])}>
+                    <div className="addButton">
+                        <svg role="img" width="18" height="18" fill="none" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M13 6a1 1 0 1 0-2 0v5H6a1 1 0 1 0 0 2h5v5a1 1 0 1 0 2 0v-5h5a1 1 0 1 0 0-2h-5V6Z" />
+                        </svg>
+                    </div>
+                </TooltipBuilder>
+            </span>}
+        </Popout>
+    )
+}
+
 function RoleBuilder({user, data, role, serverMember}) {
     return (
         <RoleRenderer
@@ -173,9 +213,7 @@ function RolesInnerBuilder({user, data, serverMember, selfServerMember, MemberRo
             }
             <RoleAddButton
                 guild={data.guild}
-                guildMember={serverMember}
-                numRoles={MemberRoles.length}
-                highestRole={GuildRoleStore.getRole(data.guild.id, selfServerMember.highestRoleId)}
+                highestRole={GuildRoleStore.getRole(data.guild.id, selfServerMember?.highestRoleId)}
                 onAddRole={(w) => { let b = serverMember.roles; b.push(w); return RoleUpdater.updateMemberRoles(data.guild.id, user.id, b, [w], []) }} 
                 buttonRef={refDOM}
             />

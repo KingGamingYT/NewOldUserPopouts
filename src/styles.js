@@ -20,7 +20,7 @@ const styles = Object.assign(
 export const popoutCSS = webpackify(
     `
         body {
-            --background-brand: var(--bg-brand);
+            --bg-brand: var(--background-brand);
             --profile-banner-background-pattern: url("data:image/png;base64,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");
         }
 
@@ -33,6 +33,9 @@ export const popoutCSS = webpackify(
             --profile-gradient-start: color-mix(in oklab, var(--profile-gradient-primary-color) 100%, var(--profile-gradient-primary-color)) !important;
             --profile-gradient-end: color-mix(in oklab, var(--profile-gradient-secondary-color) 100%, var(--profile-gradient-secondary-color)) !important;
             --custom-user-profile-theme-color-blend: linear-gradient(color-mix(in oklab, var(--profile-gradient-overlay-color), var(--profile-gradient-start)), color-mix(in oklab, var(--profile-gradient-overlay-color), var(--profile-gradient-end)));
+            :is(.headerNormal, .body, .footer) {
+                background-color: unset !important;
+            }
         }
 
         .outer.user-profile-popout.custom-user-profile-theme.disable-profile-themes {
@@ -42,7 +45,7 @@ export const popoutCSS = webpackify(
         }
 
         :where(.theme-dark) .outer:not(.disable-profile-themes) .userPopout {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), var(--custom-theme-base-color, var(--background-secondary, var(--background-base-lower))) !important;
+            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), var(--custom-theme-base-color, var(--background-secondary, var(--background-base-lower))) !important;
         }
         :where(.theme-light) .outer:not(.disable-profile-themes) .userPopout {
             background: var(--custom-theme-base-color, var(--background-secondary, var(--background-base-lower))) !important;
@@ -117,7 +120,7 @@ export const popoutCSS = webpackify(
         }
 
         .userPopout .headerName {
-            color: var(--header-primary);
+            color: var(--header-primary, var(--interactive-text-active));
             font-weight: 600;
             white-space: normal;
             text-align: center;
@@ -146,7 +149,7 @@ export const popoutCSS = webpackify(
         }
 
         .userPopout .headerTag {
-            color: var(--header-secondary);
+            color: var(--header-secondary, var(--text-default));
             font-weight: 500;
             line-height: 18px;
             flex-wrap: wrap;
@@ -163,7 +166,7 @@ export const popoutCSS = webpackify(
         }
 
         .userPopout .flexHorizontal:only-child .nameDisplay {
-            color: var(--header-primary);
+            color: var(--header-primary, var(--interactive-text-active));
             font-weight: 600;
         }
 
@@ -173,6 +176,7 @@ export const popoutCSS = webpackify(
 
         .userPopout .headerText {
             display: flex;
+            flex-wrap: wrap;
             flex-direction: column;
         }
 
@@ -185,7 +189,7 @@ export const popoutCSS = webpackify(
         }
 
         .customStatus {
-            color: var(--header-secondary);
+            color: var(--header-secondary, var(--text-default));
             margin-top: 12px;
             text-align: center;
             width: 100%;
@@ -204,7 +208,7 @@ export const popoutCSS = webpackify(
             margin-right: 8px;
         }
 
-        .customStatus .emoji+.customStatusText {
+        .customStatus .emoji+span+.customStatusText {
             display: inline;
         }
         
@@ -300,7 +304,7 @@ export const popoutCSS = webpackify(
 
         .userPopout .bodyTitle {
             font-weight: 700;
-            color: var(--header-secondary);
+            color: var(--header-secondary, var(--text-default));
             margin-bottom: 8px;
             text-transform: uppercase;
         }
@@ -343,6 +347,19 @@ export const popoutCSS = webpackify(
                 .roleName {
                     margin-top: 2px;
                 }
+            }
+            .addButton {
+                align-items: center;
+                border: 1px solid var(--interactive-text-default);
+                border-radius: 11px;
+                box-sizing: border-box;
+                color: var(--interactive-text-default);
+                cursor: pointer;
+                display: flex;
+                gap: 2px;
+                height: 22px;
+                justify-content: center;
+                min-width: 22px;
             }
         }
 
