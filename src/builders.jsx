@@ -185,13 +185,13 @@ function RoleAddButton({guild, highestRole, onAddRole, buttonRef}) {
     )
 }
 
-function RoleBuilder({user, data, role, serverMember}) {
+function RoleBuilder({user, data, role, highestRole, serverMember}) {
     return (
         <RoleRenderer
             className="role"
             role={role}
             guildId={data.guild.id}
-            canRemove={RolePermissionCheck({guildId: data.guild.id}).canRemove}
+            canRemove={RolePermissionCheck({guildId: data.guild.id}).canRemove && PermissionStore.isRoleHigher(data.guild, highestRole, role)}
             onRemove={() => { return RoleUpdater.updateMemberRoles(data.guild.id, user.id, serverMember.roles.filter(mRole => mRole !== role.id), [], [role.id]) }}
         />
     )
@@ -199,6 +199,7 @@ function RoleBuilder({user, data, role, serverMember}) {
 
 function RolesInnerBuilder({user, data, serverMember, selfServerMember, MemberRoles}) {
     const refDOM = useRef(null);
+    const highestRole = GuildRoleStore.getRole(data.guild.id, selfServerMember?.highestRoleId);
     return (
         <div className="rolesList" aria-orientation="vertical">
             {
@@ -207,13 +208,14 @@ function RolesInnerBuilder({user, data, serverMember, selfServerMember, MemberRo
                         user={user}
                         data={data}
                         role={role}
+                        highestRole={highestRole}
                         serverMember={serverMember}
                     />
                 )
             }
             <RoleAddButton
                 guild={data.guild}
-                highestRole={GuildRoleStore.getRole(data.guild.id, selfServerMember?.highestRoleId)}
+                highestRole={highestRole}
                 onAddRole={(w) => { let b = serverMember.roles; b.push(w); return RoleUpdater.updateMemberRoles(data.guild.id, user.id, b, [w], []) }} 
                 buttonRef={refDOM}
             />
@@ -314,7 +316,7 @@ function HeaderInnerBuilder({data, user, displayProfile, tagName, displayName, n
 
     return (
         <div className="headerTop" style={{ flex: "1 1 auto" }}>
-            <AvatarFetch className="avatarWrapper" user={user} guildId={displayProfile.guildId} onOpenProfile={() => { ModalAccessUtils.openUserProfileModal({ userId: user.id }); data.onClose()}} />
+            <AvatarFetch className="avatarWrapper" user={user} guildId={displayProfile.guildId} onOpenProfile={() => { ModalAccessUtils.openUserProfileModal({ userId: user.id, guildId: displayProfile.guildId }); data.onClose()}} />
             <div className={Utils.className("headerText", ((Data.load("disableDiscrim" || "main.disableDiscrim.initial") || !displayProfile._userProfile?.legacyUsername) && !user.bot) && "headerTextPomelo", "size16")}>
                 { (!user.bot || serverMember?.nick) && <div className="headerNameWrapper">
                     <div className="headerName">{serverMember?.nick || nickName || displayName || tagName}</div>

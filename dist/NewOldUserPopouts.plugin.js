@@ -2,7 +2,7 @@
  * @name NewOldUserPopouts
  * @author KingGamingYT
  * @description A full, largely accurate restoration of Discord's profile popouts used from 2018 to 2021. Features modern additions such as banners, theme colors, and guild tags.
- * @version 1.0.0-dev
+ * @version 1.0.0
  */
 
 /*@cc_on
@@ -479,14 +479,14 @@ function RoleAddButton({ guild, highestRole, onAddRole, buttonRef }) {
 		)
 	);
 }
-function RoleBuilder({ user, data, role, serverMember }) {
+function RoleBuilder({ user, data, role, highestRole, serverMember }) {
 	return BdApi.React.createElement(
 		RoleRenderer,
 		{
 			className: "role",
 			role,
 			guildId: data.guild.id,
-			canRemove: RolePermissionCheck({ guildId: data.guild.id }).canRemove,
+			canRemove: RolePermissionCheck({ guildId: data.guild.id }).canRemove && PermissionStore.isRoleHigher(data.guild, highestRole, role),
 			onRemove: () => {
 				return RoleUpdater.updateMemberRoles(data.guild.id, user.id, serverMember.roles.filter((mRole) => mRole !== role.id), [], [role.id]);
 			}
@@ -495,6 +495,7 @@ function RoleBuilder({ user, data, role, serverMember }) {
 }
 function RolesInnerBuilder({ user, data, serverMember, selfServerMember, MemberRoles }) {
 	const refDOM = react.useRef(null);
+	const highestRole = GuildRoleStore.getRole(data.guild.id, selfServerMember?.highestRoleId);
 	return BdApi.React.createElement("div", { className: "rolesList", "aria-orientation": "vertical" }, MemberRoles.map(
 		(role) => BdApi.React.createElement(
 			RoleBuilder,
@@ -502,6 +503,7 @@ function RolesInnerBuilder({ user, data, serverMember, selfServerMember, MemberR
 				user,
 				data,
 				role,
+				highestRole,
 				serverMember
 			}
 		)
@@ -509,7 +511,7 @@ function RolesInnerBuilder({ user, data, serverMember, selfServerMember, MemberR
 		RoleAddButton,
 		{
 			guild: data.guild,
-			highestRole: GuildRoleStore.getRole(data.guild.id, selfServerMember?.highestRoleId),
+			highestRole,
 			onAddRole: (w) => {
 				let b = serverMember.roles;
 				b.push(w);
@@ -585,7 +587,7 @@ function HeaderInnerBuilder({ data, user, displayProfile, tagName, displayName, 
 	const _emoji = _activities.filter((activity) => activity.emoji);
 	const serverMember = GuildMemberStore.getMember(displayProfile.guildId, user.id);
 	return BdApi.React.createElement("div", { className: "headerTop", style: { flex: "1 1 auto" } }, BdApi.React.createElement(AvatarFetch, { className: "avatarWrapper", user, guildId: displayProfile.guildId, onOpenProfile: () => {
-		ModalAccessUtils.openUserProfileModal({ userId: user.id });
+		ModalAccessUtils.openUserProfileModal({ userId: user.id, guildId: displayProfile.guildId });
 		data.onClose();
 	} }), BdApi.React.createElement("div", { className: betterdiscord.Utils.className("headerText", (betterdiscord.Data.load("disableDiscrim") || !displayProfile._userProfile?.legacyUsername) && !user.bot && "headerTextPomelo", "size16") }, (!user.bot || serverMember?.nick) && BdApi.React.createElement("div", { className: "headerNameWrapper" }, BdApi.React.createElement("div", { className: "headerName" }, serverMember?.nick || nickName || displayName || tagName)), BdApi.React.createElement("div", { className: "flexHorizontal", style: { flex: "1 1 auto" } }, BdApi.React.createElement("div", { className: `headerTag ${serverMember?.nick ? "headerTagNickname" : "headerTagNoNickname"} ${serverMember?.nick || (betterdiscord.Data.load("disableDiscrim") || !displayProfile._userProfile?.legacyUsername) && !user.bot ? "size14" : "size16"}` }, (serverMember?.nick && !betterdiscord.Data.load("disableDiscrim") && displayProfile._userProfile?.legacyUsername || user.bot) && BdApi.React.createElement("div", { className: "nameDisplay" }, displayName || tagName), !betterdiscord.Data.load("disableDiscrim") && displayProfile._userProfile?.legacyUsername ? BdApi.React.createElement("div", { className: "discriminator" }, displayProfile._userProfile?.legacyUsername?.substring(displayProfile._userProfile?.legacyUsername?.indexOf("#"))) : user.bot ? BdApi.React.createElement("div", { className: "discriminator" }, "#" + user.discriminator) : BdApi.React.createElement("div", { className: "userTag" }, "@" + tagName), user.bot && BdApi.React.createElement(
 		BotTagRenderer.Z,
