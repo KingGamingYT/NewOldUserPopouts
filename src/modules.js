@@ -32,7 +32,7 @@ export const [
     GameProfile,
     intl,
 ] = /* @__PURE__ */ Webpack.getBulk(
-    { filter: /* @__PURE__ */ Webpack.Filters.bySource('forceShowPremium', 'pendingThemeColors') },
+    { filter: /* @__PURE__ */ Webpack.Filters.bySource('forceShowPremium', 'pendingThemeColors', 'profileThemeClassName') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('timestamps', '.TEXT_FEEDBACK_POSITIVE'), searchExports: true },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('activity', 'USER_PROFILE_ACTIVITY_BUTTONS') },
     { filter: /* @__PURE__ */ Webpack.Filters.byKeys('gameState', 'clickableImage') },
@@ -56,7 +56,7 @@ export const [
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('PRESS_JOIN_CALL_BUTTON') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('users', 'channel', 'themeType') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('maxUsers', 'guildId') },
-    { filter: /* @__PURE__ */ Webpack.Filters.byStrings('channel', 'isGuildStageVoice', 'isDM', 'Pl.CONNECT') },
+    { filter: /* @__PURE__ */ Webpack.Filters.byStrings('channel', 'isGuildStageVoice', 'isDM', '.CONNECT') },
     { filter: /* @__PURE__ */ Webpack.Filters.bySource(".botTag", "invertColor") },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('"data-toggleable-component":"switch"', 'layout:"horizontal"'), searchExports: true },
     { filter: x => x.openGameProfileModal },

@@ -41,7 +41,7 @@ export default class NewOldUserPopouts {
     start() {
         Data.save("settings", settings);
         DOM.addStyle('popoutCSS', popoutCSS);
-        Patcher.after(entireProfileModal.Z, "render", (that, [props], res) => {
+        Patcher.after(entireProfileModal.A, "render", (that, [props], res) => {
             if (!props.themeType?.includes("POPOUT")) return;
             if (!Utils.findInTree(
                 props, x => x?.displayProfile, { walkable: ['props', 'children'] }) 

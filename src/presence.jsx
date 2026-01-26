@@ -186,7 +186,7 @@ function ActivityCard({user, activity, check}) {
                 </div>
             </div>
             <div className="buttonsWrapper actionsUserPopout">
-                <ActivityButtons user={user} activity={activity} />
+                {activity?.buttons?.length && <ActivityButtons user={user} activity={activity} />}
             </div>
         </>
     )

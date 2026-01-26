@@ -24,7 +24,7 @@ import {
     PermissionStore,
     UserNote,
     useStateFromStores,
-    VoiceStateStore
+    VoiceStateStore,
 } from './modules'
 import { ActivityCards, SpotifyCards, TwitchCards } from './presence';
 

@@ -66,7 +66,7 @@ const [
 	GameProfile,
 	intl
 ] = betterdiscord.Webpack.getBulk(
-	{ filter: betterdiscord.Webpack.Filters.bySource("forceShowPremium", "pendingThemeColors") },
+	{ filter: betterdiscord.Webpack.Filters.bySource("forceShowPremium", "pendingThemeColors", "profileThemeClassName") },
 	{ filter: betterdiscord.Webpack.Filters.byStrings("timestamps", ".TEXT_FEEDBACK_POSITIVE"), searchExports: true },
 	{ filter: betterdiscord.Webpack.Filters.byStrings("activity", "USER_PROFILE_ACTIVITY_BUTTONS") },
 	{ filter: betterdiscord.Webpack.Filters.byKeys("gameState", "clickableImage") },
@@ -90,7 +90,7 @@ const [
 	{ filter: betterdiscord.Webpack.Filters.byStrings("PRESS_JOIN_CALL_BUTTON") },
 	{ filter: betterdiscord.Webpack.Filters.byStrings("users", "channel", "themeType") },
 	{ filter: betterdiscord.Webpack.Filters.byStrings("maxUsers", "guildId") },
-	{ filter: betterdiscord.Webpack.Filters.byStrings("channel", "isGuildStageVoice", "isDM", "Pl.CONNECT") },
+	{ filter: betterdiscord.Webpack.Filters.byStrings("channel", "isGuildStageVoice", "isDM", ".CONNECT") },
 	{ filter: betterdiscord.Webpack.Filters.bySource(".botTag", "invertColor") },
 	{ filter: betterdiscord.Webpack.Filters.byStrings('"data-toggleable-component":"switch"', 'layout:"horizontal"'), searchExports: true },
 	{ filter: (x) => x.openGameProfileModal },
@@ -237,7 +237,7 @@ function ActivityCard({ user, activity, check }) {
 				onError: () => setShouldSmallFallback(true)
 			}
 		))
-	), BdApi.React.createElement("div", { className: betterdiscord.Utils.className(activity?.assets ? "contentImagesUserPopout" : application || activity?.timestamps ? "contentGameImageUserPopout" : "contentNoImagesUserPopout", "content"), style: { display: "grid", flex: "1", marginBottom: "3px" } }, BdApi.React.createElement("div", { className: "nameNormal textRow ellipsis", style: { fontWeight: "600" } }, (check?.listening || check?.watching) && [2, 3].includes(activity?.type) ? activity.details : activity.name), !(filterCheck?.listening || filterCheck?.watching) && BdApi.React.createElement("div", { className: "details textRow ellipsis" }, activity.details), BdApi.React.createElement("div", { className: "state textRow ellipsis" }, activity?.state && activity?.party && activity?.party?.size ? activity.state + " (" + activity.party.size[0] + " of " + activity.party.size[1] + ")" : activity?.party && activity?.party?.size ? `Party: (${activity.party.size[0]} of ${activity.party.size[1]})` : activity.state), activity?.timestamps?.end ? BdApi.React.createElement("div", { className: "mediaProgressBarContainer" }, BdApi.React.createElement(MediaProgressBar, { start: activity?.timestamps?.start || activity?.created_at, end: activity?.timestamps?.end })) : BdApi.React.createElement(ActivityTimer, { activity }))), BdApi.React.createElement("div", { className: "buttonsWrapper actionsUserPopout" }, BdApi.React.createElement(ActivityButtons, { user, activity })));
+	), BdApi.React.createElement("div", { className: betterdiscord.Utils.className(activity?.assets ? "contentImagesUserPopout" : application || activity?.timestamps ? "contentGameImageUserPopout" : "contentNoImagesUserPopout", "content"), style: { display: "grid", flex: "1", marginBottom: "3px" } }, BdApi.React.createElement("div", { className: "nameNormal textRow ellipsis", style: { fontWeight: "600" } }, (check?.listening || check?.watching) && [2, 3].includes(activity?.type) ? activity.details : activity.name), !(filterCheck?.listening || filterCheck?.watching) && BdApi.React.createElement("div", { className: "details textRow ellipsis" }, activity.details), BdApi.React.createElement("div", { className: "state textRow ellipsis" }, activity?.state && activity?.party && activity?.party?.size ? activity.state + " (" + activity.party.size[0] + " of " + activity.party.size[1] + ")" : activity?.party && activity?.party?.size ? `Party: (${activity.party.size[0]} of ${activity.party.size[1]})` : activity.state), activity?.timestamps?.end ? BdApi.React.createElement("div", { className: "mediaProgressBarContainer" }, BdApi.React.createElement(MediaProgressBar, { start: activity?.timestamps?.start || activity?.created_at, end: activity?.timestamps?.end })) : BdApi.React.createElement(ActivityTimer, { activity }))), BdApi.React.createElement("div", { className: "buttonsWrapper actionsUserPopout" }, activity?.buttons?.length && BdApi.React.createElement(ActivityButtons, { user, activity })));
 }
 function VoiceCards({ voice, stream }) {
 	const channel = useStateFromStores([ChannelStore], () => ChannelStore.getChannel(voice));
@@ -870,7 +870,7 @@ class NewOldUserPopouts {
 	start() {
 		betterdiscord.Data.save("settings", settings);
 		betterdiscord.DOM.addStyle("popoutCSS", popoutCSS);
-		betterdiscord.Patcher.after(entireProfileModal.Z, "render", (that, [props], res) => {
+		betterdiscord.Patcher.after(entireProfileModal.A, "render", (that, [props], res) => {
 			if (!props.themeType?.includes("POPOUT")) return;
 			if (!betterdiscord.Utils.findInTree(
 				props,
