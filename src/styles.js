@@ -9,12 +9,11 @@ const styles = Object.assign(
         sm: Webpack.getModule(x=>x.primary && x.hasText && !x.hasTrailing).sm,
         clickableImage: Webpack.getByKeys('gameState', 'clickableImage').clickableImage
     },
-    Webpack.getByKeys('container', 'bar', 'progress'),
-    Webpack.getByKeys('outer', 'overlay'),
-    Webpack.getByKeys('root', 'pill', 'expandButton'),
-    Webpack.getByKeys('inlineContainer', 'themedBackground'),
-    Webpack.getByKeys('badgeContainer', 'badgesContainer'),
-    Webpack.getByKeys('tabularNumbers'),
+    Object.getOwnPropertyDescriptors(Webpack.getByKeys('container', 'bar', 'progress')),
+    Object.getOwnPropertyDescriptors(Webpack.getByKeys('outer', 'overlay')),
+    Object.getOwnPropertyDescriptors(Webpack.getByKeys('inlineContainer', 'themedBackground')),
+    Object.getOwnPropertyDescriptors(Webpack.getByKeys('badgeContainer', 'badgesContainer')),
+    Object.getOwnPropertyDescriptors(Webpack.getByKeys('tabularNumbers')),
 );
 
 export const popoutCSS = webpackify(
@@ -698,7 +697,7 @@ export const popoutCSS = webpackify(
 export function webpackify(css) {
     for (const key in styles) {
         let regex = new RegExp(`\\.${key}([\\s,.):>])`, 'g');
-        css = css.replace(regex, `.${styles[key]}$1`);
+        css = styles[key]?.value ? css.replace(regex, `.${styles[key].value}$1`) : css.replace(regex, `.${styles[key]}$1`);
     }
     return css;
 }

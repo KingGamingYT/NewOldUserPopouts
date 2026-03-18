@@ -6,7 +6,7 @@ import {
     StreamStore, 
     ApplicationStreamPreviewStore,
     RelationshipStore,
-    DetectableGameSupplementalStore, 
+    NewGameStore, 
     useStateFromStores, 
     EmojiRenderer, 
     ActivityTimer,
@@ -22,7 +22,6 @@ import {
     VoiceStateStore,
     UserStore,
     GameProfile, 
-    FetchGames,
     intl 
 } from "./modules";
 import { TooltipBuilder, activityCheck } from "./builders";
@@ -63,15 +62,7 @@ function ActivityCard({user, activity, check}) {
     const filterCheck = activityCheck({activities: [activity]});
     const gameId = activity?.application_id;
 
-    useEffect(() => { 
-        (async () => {
-            if (!DetectableGameSupplementalStore.getGame(gameId)) {
-                await FetchGames.getDetectableGamesSupplemental([gameId]);
-            }
-        })()
-    }, [gameId]);
-
-    const game = DetectableGameSupplementalStore.getGame(gameId);
+    const game = NewGameStore.getGame(gameId);
     const application = ApplicationStore.getApplication(activity?.application_id);
 
     return (

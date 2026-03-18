@@ -316,7 +316,7 @@ function HeaderInnerBuilder({data, user, displayProfile, tagName, displayName, n
 
     return (
         <div className="headerTop" style={{ flex: "1 1 auto" }}>
-            <AvatarFetch className="avatarWrapper" user={user} guildId={displayProfile.guildId} onOpenProfile={() => { ModalAccessUtils.openUserProfileModal({ userId: user.id, guildId: displayProfile.guildId }); data.onClose()}} />
+            <AvatarFetch className="avatarWrapper" user={user} guildId={displayProfile.guildId} themeType={"POPOUT"} onOpenProfile={() => { ModalAccessUtils.openUserProfileModal({ userId: user.id, guildId: displayProfile.guildId }); data.onClose()}} />
             <div className={Utils.className("headerText", ((Data.load("disableDiscrim" || "main.disableDiscrim.initial") || !displayProfile._userProfile?.legacyUsername) && !user.bot) && "headerTextPomelo", "size16")}>
                 { (!user.bot || serverMember?.nick) && <div className="headerNameWrapper">
                     <div className="headerName">{serverMember?.nick || nickName || displayName || tagName}</div>
@@ -334,12 +334,12 @@ function HeaderInnerBuilder({data, user, displayProfile, tagName, displayName, n
                                 <div className="userTag">{"@" + tagName}</div>
                         }
                         {
-                            user.bot && <BotTagRenderer.Z 
+                            user.bot && <BotTagRenderer.A 
                                 type={
                                     user.system ?
-                                        BotTagRenderer.Z.Types.OFFICIAL
+                                        BotTagRenderer.A.Types.OFFICIAL
                                     :
-                                        BotTagRenderer.Z.Types.BOT
+                                        BotTagRenderer.A.Types.BOT
                                 }
                                 verified={user.publicFlags & (1<<16)}
                                 className="botTag"

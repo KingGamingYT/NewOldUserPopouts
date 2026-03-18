@@ -8,7 +8,6 @@ export const [
     ActivityCardClasses,
     AvatarFetch,
     EmojiRenderer,
-    FetchGames,
     RoleAddPopout,
     RoleRenderer,
     RolePermissionCheck,
@@ -38,7 +37,6 @@ export const [
     { filter: /* @__PURE__ */ Webpack.Filters.byKeys('gameState', 'clickableImage') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('displayProfile', 'onOpenProfile', 'animateOnHover', 'previewStatus') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('translateSurrogatesToInlineEmoji') },
-    { filter: /* @__PURE__ */ Webpack.Filters.byKeys('getDetectableGamesSupplemental') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('popoutRoleDot', 'getSortedRoles'), searchExports: true },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('role', 'canRemove', 'unsafe_rawColors.PRIMARY_300') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('.ADMINISTRATOR', '.MANAGE_MESSAGES') },
@@ -57,7 +55,7 @@ export const [
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('users', 'channel', 'themeType') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('maxUsers', 'guildId') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('channel', 'isGuildStageVoice', 'isDM', '.CONNECT') },
-    { filter: /* @__PURE__ */ Webpack.Filters.bySource(".botTag", "invertColor") },
+    { filter: /* @__PURE__ */ Webpack.Filters.bySource(".BOT", "invertColor") },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('"data-toggleable-component":"switch"', 'layout:"horizontal"'), searchExports: true },
     { filter: x => x.openGameProfileModal },
     { filter: /* @__PURE__ */ x=>x.t && x.t.formatToMarkdownString },
@@ -66,11 +64,11 @@ export const ActivityStore = /* @__PURE__ */ Webpack.getStore("PresenceStore");
 export const ApplicationStore = /* @__PURE__ */ Webpack.getStore('ApplicationStore');
 export const ApplicationStreamPreviewStore = /* @__PURE__ */ Webpack.getStore('ApplicationStreamPreviewStore');
 export const ChannelStore = /* @__PURE__ */ Webpack.getStore("ChannelStore");
-export const DetectableGameSupplementalStore = /* @__PURE__ */ Webpack.getStore("DetectableGameSupplementalStore");
 export const RelationshipStore = /* @__PURE__ */ Webpack.getStore('RelationshipStore');
 export const GuildStore = /* @__PURE__ */ Webpack.getStore("GuildStore");
 export const GuildMemberStore = /* @__PURE__ */ Webpack.getStore('GuildMemberStore');
 export const GuildRoleStore = /* @__PURE__ */ Webpack.getStore('GuildRoleStore');
+export const NewGameStore = /* @__PURE__ */ Webpack.getStore("NewGameStore");
 export const PermissionStore = /* @__PURE__ */ Webpack.getStore('PermissionStore');
 export const SelectedGuildStore = /* @__PURE__ */ Webpack.getStore('SelectedGuildStore');
 export const StreamStore = /* @__PURE__ */ Webpack.getStore('ApplicationStreamingStore');
