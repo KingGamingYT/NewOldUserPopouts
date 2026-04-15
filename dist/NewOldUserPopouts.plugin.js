@@ -71,7 +71,7 @@ const [
 	{ filter: betterdiscord.Webpack.Filters.byKeys("gameState", "clickableImage") },
 	{ filter: betterdiscord.Webpack.Filters.byStrings("displayProfile", "onOpenProfile", "animateOnHover", "previewStatus") },
 	{ filter: betterdiscord.Webpack.Filters.byStrings("translateSurrogatesToInlineEmoji") },
-	{ filter: betterdiscord.Webpack.Filters.byStrings("popoutRoleDot", "getSortedRoles"), searchExports: true },
+	{ filter: betterdiscord.Webpack.Filters.byStrings("roleFilter", "getSortedRoles"), searchExports: true },
 	{ filter: betterdiscord.Webpack.Filters.byStrings("role", "canRemove", "unsafe_rawColors.PRIMARY_300") },
 	{ filter: betterdiscord.Webpack.Filters.byStrings(".ADMINISTRATOR", ".MANAGE_MESSAGES") },
 	{ filter: (x) => x.updateMemberRoles },
@@ -433,7 +433,7 @@ function ClanTagBuilder({ user }) {
 		)
 	);
 }
-function RoleAddButton({ guild, highestRole, onAddRole, buttonRef }) {
+function RoleAddButton({ guild, guildMember, highestRole, onAddRole, buttonRef }) {
 	const [showPopout, setShowPopout] = react.useState(false);
 	if (!RolePermissionCheck({ guildId: guild.id }).canRemove) {
 		return;
@@ -451,7 +451,7 @@ function RoleAddButton({ guild, highestRole, onAddRole, buttonRef }) {
 					onSelect: onAddRole,
 					onClose: () => setShowPopout(false),
 					roleStyle: "username",
-					roleFilter: (role) => !role.managed && PermissionStore.isRoleHigher(guild, highestRole, role) && role.id !== guild.id
+					roleFilter: (role) => !role.managed && PermissionStore.isRoleHigher(guild, highestRole, role) && !guildMember.roles.find((item) => item === role.id) && role.id !== guild.id
 				}
 			)),
 			position: "top",
@@ -502,6 +502,7 @@ function RolesInnerBuilder({ user, data, serverMember, selfServerMember, MemberR
 		RoleAddButton,
 		{
 			guild: data.guild,
+			guildMember: serverMember,
 			highestRole,
 			onAddRole: (w) => {
 				let b = serverMember.roles;

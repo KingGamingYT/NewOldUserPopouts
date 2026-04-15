@@ -37,7 +37,7 @@ export const [
     { filter: /* @__PURE__ */ Webpack.Filters.byKeys('gameState', 'clickableImage') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('displayProfile', 'onOpenProfile', 'animateOnHover', 'previewStatus') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('translateSurrogatesToInlineEmoji') },
-    { filter: /* @__PURE__ */ Webpack.Filters.byStrings('popoutRoleDot', 'getSortedRoles'), searchExports: true },
+    { filter: /* @__PURE__ */ Webpack.Filters.byStrings('roleFilter', 'getSortedRoles'), searchExports: true },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('role', 'canRemove', 'unsafe_rawColors.PRIMARY_300') },
     { filter: /* @__PURE__ */ Webpack.Filters.byStrings('.ADMINISTRATOR', '.MANAGE_MESSAGES') },
     { filter: /* @__PURE__ */ x=>x.updateMemberRoles },

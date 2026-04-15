@@ -37,7 +37,7 @@ function userVoice({voice}) {
 }
 
 export const headers = {
-    0: intl.intl.formatToPlainString(intl.t['iKo3yJ']), // playing
+    0: intl.intl.formatToPlainString(intl.t['2TbM/G']), // playing
     1: intl.intl.formatToPlainString(intl.t['4CQq9Q'], { name: '' }), // streaming
     2: intl.intl.formatToPlainString(intl.t['NF5xop'], { name: '' }), // listening
     3: intl.intl.formatToPlainString(intl.t['pW3Ip3'], { name: '' }), // watching

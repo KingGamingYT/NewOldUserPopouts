@@ -147,7 +147,7 @@ function ClanTagBuilder({user}) {
     )
 }
 
-function RoleAddButton({guild, highestRole, onAddRole, buttonRef}) {
+function RoleAddButton({guild, guildMember, highestRole, onAddRole, buttonRef}) {
     const [showPopout, setShowPopout] = useState(false);
 
     if (!RolePermissionCheck({guildId: guild.id}).canRemove) {
@@ -164,7 +164,7 @@ function RoleAddButton({guild, highestRole, onAddRole, buttonRef}) {
                     onSelect={onAddRole} 
                     onClose={() => setShowPopout(false)}
                     roleStyle="username"  
-                    roleFilter={(role) => !role.managed && PermissionStore.isRoleHigher(guild, highestRole, role) && role.id !== guild.id}
+                    roleFilter={(role) => !role.managed && PermissionStore.isRoleHigher(guild, highestRole, role) && !guildMember.roles.find((item) => item === role.id) && role.id !== guild.id}
                 />
             </PopoutContainer>}
             position="top"
@@ -215,6 +215,7 @@ function RolesInnerBuilder({user, data, serverMember, selfServerMember, MemberRo
             }
             <RoleAddButton
                 guild={data.guild}
+                guildMember={serverMember}
                 highestRole={highestRole}
                 onAddRole={(w) => { let b = serverMember.roles; b.push(w); return RoleUpdater.updateMemberRoles(data.guild.id, user.id, b, [w], []) }} 
                 buttonRef={refDOM}
