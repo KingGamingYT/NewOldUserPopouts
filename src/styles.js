@@ -303,7 +303,7 @@ export const popoutCSS = webpackify(
 
         .userPopout .bodyTitle {
             font-weight: 700;
-            color: var(--header-secondary, var(--text-default));
+            color: var(--interactive-text-default, var(--text-default));
             margin-bottom: 8px;
             text-transform: uppercase;
         }
@@ -343,13 +343,14 @@ export const popoutCSS = webpackify(
                 height: 22px;
                 border: 1px solid;
                 border-radius: 11px;
+                padding-left: 0;
                 .roleName {
                     margin-top: 2px;
                 }
             }
             .addButton {
                 align-items: center;
-                border: 1px solid var(--interactive-text-default);
+                border: 1px solid var(--border-strong);
                 border-radius: 11px;
                 box-sizing: border-box;
                 color: var(--interactive-text-default);
@@ -380,6 +381,10 @@ export const popoutCSS = webpackify(
             width: 100%;
         }
 
+        .userPopout .bodyInnerWrapper .note textarea::placeholder {
+          color: var(--text-muted);
+        }
+
         .userPopout .bodyInnerWrapper .note textarea:focus {
             background-color: var(--background-tertiary, var(--background-base-lowest)) !important;
         }
@@ -391,8 +396,12 @@ export const popoutCSS = webpackify(
             flex-direction: column;
             padding-right: 9px;
             .inlineContainer {
-                background: var(--deprecated-text-input-bg);
-                border: 1px solid var(--deprecated-text-input-border);
+                background: var(--deprecated-text-input-bg, var(--input-background-default));
+                border: 1px solid var(--deprecated-text-input-border, var(--input-border-default));
+                transition: border-color .1s ease-in-out;
+                &:focus-within {
+                    border-color: var(--deprecated-text-input-border, var(--input-border-active));
+                }
             }
         }
 
@@ -436,12 +445,14 @@ export const popoutCSS = webpackify(
         }
 
         .userPopout .activityUserPopout .contentGameImageUserPopout {
+            gap: 2px;
             margin-bottom: -1px;
             margin-left: 10px;
         }
 
         .userPopout .activityUserPopout .contentImagesUserPopout {
-            margin-left: 10px;
+            margin-left: 12px;
+            gap: 2px;
             overflow: hidden;
         }
 
@@ -466,13 +477,14 @@ export const popoutCSS = webpackify(
         }
 
         .userPopout .activityUserPopout .mediaProgressBarContainer {
-            margin-top: 10px;
+            margin-top: 8px;
             width: auto;
             &> div {
                 display: grid;
                 grid-template-areas: "progressbar progressbar" "lefttext righttext";
+                gap: 4px;
             }
-            .bar {
+            [role="progressbar"] {
                 background-color: rgba(79,84,92,.16);
                 height: 4px;
                 grid-area: progressbar;
@@ -485,6 +497,10 @@ export const popoutCSS = webpackify(
                 justify-self: end;
                 grid-area: righttext;
             }   
+        }
+
+        .userPopout .activityUserPopout .state+.mediaProgressBarContainer {
+          margin-top: 4px;
         }
 
         .userPopout .activityUserPopout :is(.nameNormal, .details, .state, .timestamp) {
@@ -581,6 +597,10 @@ export const popoutCSS = webpackify(
             fill: #f6fbf9 !important;
         }
 
+        .activityUserPopout .assets {
+            display: flex;
+        }
+
         .activityUserPopout .assets .gameIcon {
             -webkit-user-drag: none;
             background-size: 100%;
@@ -608,7 +628,7 @@ export const popoutCSS = webpackify(
             height: 20px;
             border-radius: 50%;
             position: absolute;
-            bottom: -2px;
+            bottom: -4px;
             right: -4px; 
         }
 
