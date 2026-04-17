@@ -102,6 +102,37 @@ export const popoutCSS = webpackify(
             width: initial;
         }
 
+        .avatarHint {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity .1s ease;
+            pointer-events: none;
+        }
+
+        .avatarHintInner {
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            box-sizing: border-box;
+            font-weight: 700;
+            width: 100%;
+            padding-top: 4px;
+            height: 100%;
+            -webkit-box-pack: center;
+            justify-content: center;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            text-transform: uppercase;
+            box-shadow: inset 0 0 120px rgba(0,0,0,.75);
+            line-height: 12px;
+            font-size: 10px;
+            color: var(--white);
+        }
+
         .userPopout .body .headerText {
             flex-direction: column;
             text-align: center;

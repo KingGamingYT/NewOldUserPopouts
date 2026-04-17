@@ -2,9 +2,12 @@ import { Data, Utils } from 'betterdiscord';
 import { useState, useRef, Suspense } from 'react';
 import {
     ActivityStore,
+    AvatarClasses,
     AvatarFetch,
+    AvatarWrapper,
     BotTagRenderer,
     EmojiRenderer,
+    FocusRing,
     GuildMemberStore,
     GuildRoleStore,
     intl,
@@ -310,6 +313,38 @@ function NoteBuilder({user}) {
     )
 }
 
+function AvatarOverlay({show, ...avatarProps}) {
+    const size = avatarProps.size.slice(5);
+
+    return (
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ opacity: show && 1 }} className={`avatarHint`}>
+            <foreignObject x="0" y="0" width={size} height={size} mask={`url(#svg-mask-avatar-status-round-${size})`}>
+                <div className="avatarHintInner">{intl.intl.formatToPlainString(intl.t['uTre2y'])}</div>
+            </foreignObject>
+        </svg>
+    )
+}
+
+function AvatarWithOverlay({user, displayProfile, themeType, className, onOpenProfile}) {
+    const {avatarProps, eventHandlers} = AvatarFetch({user, displayProfile, themeType});
+    const [showHoverOverlay, shouldShowHoverOverlay] = useState(false);
+
+    return (
+        !onOpenProfile ? <div className={`${AvatarClasses.avatar} ${className}`} {...eventHandlers}>
+            <AvatarWrapper {...avatarProps} />
+        </div> : <FocusRing 
+            aria-label={intl.intl.formatToPlainString(intl.t["+Xp3hq"])} 
+            className={`${AvatarClasses.avatar} ${AvatarClasses.clickable} ${className}`} 
+            focusProps={{ ringClassName: AvatarClasses.focusRing }}
+            onClick={onOpenProfile}
+            onMouseEnter={() => shouldShowHoverOverlay(true)}
+            onMouseLeave={() => shouldShowHoverOverlay(false)}>
+            <AvatarWrapper {...avatarProps} />
+            <AvatarOverlay show={showHoverOverlay} {...avatarProps} />
+        </FocusRing>
+    )
+}
+
 function HeaderInnerBuilder({data, user, displayProfile, tagName, displayName, nickName, activities}) {
     const _activities = activities.filter(activity => activity && activity.type === 4);
     const _emoji = _activities.filter(activity => activity.emoji);
@@ -317,7 +352,7 @@ function HeaderInnerBuilder({data, user, displayProfile, tagName, displayName, n
 
     return (
         <div className="headerTop" style={{ flex: "1 1 auto" }}>
-            <AvatarFetch className="avatarWrapper" user={user} guildId={displayProfile.guildId} themeType={"POPOUT"} onOpenProfile={() => { ModalAccessUtils.openUserProfileModal({ userId: user.id, guildId: displayProfile.guildId }); data.onClose()}} />
+            <AvatarWithOverlay className="avatarWrapper" user={user} guildId={displayProfile.guildId} themeType={"POPOUT"} onOpenProfile={() => { ModalAccessUtils.openUserProfileModal({ userId: user.id, guildId: displayProfile.guildId }); data.onClose()}} />
             <div className={Utils.className("headerText", ((Data.load("disableDiscrim" || "main.disableDiscrim.initial") || !displayProfile._userProfile?.legacyUsername) && !user.bot) && "headerTextPomelo", "size16")}>
                 { (!user.bot || serverMember?.nick) && <div className="headerNameWrapper">
                     <div className="headerName">{serverMember?.nick || nickName || displayName || tagName}</div>
