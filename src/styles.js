@@ -7,7 +7,8 @@ const styles = Object.assign(
         customButtons: Webpack.getByKeys('primaryButton', 'customButtons').customButtons,
         hasText: Webpack.getModule(x=>x.primary && x.hasText && !x.hasTrailing).hasText,
         sm: Webpack.getModule(x=>x.primary && x.hasText && !x.hasTrailing).sm,
-        clickableImage: Webpack.getByKeys('gameState', 'clickableImage').clickableImage
+        clickableImage: Webpack.getByKeys('gameState', 'clickableImage').clickableImage,
+        avatarDecorationContainer: Webpack.getByKeys('avatarDecorationContainer').avatarDecorationContainer
     },
     Object.getOwnPropertyDescriptors(Webpack.getByKeys('container', 'bar', 'progress')),
     Object.getOwnPropertyDescriptors(Webpack.getByKeys('outer', 'overlay')),
@@ -100,6 +101,10 @@ export const popoutCSS = webpackify(
             left: unset !important;
             top: unset !important;
             width: initial;
+        }
+
+        .avatarWrapper .avatarDecorationContainer {
+            z-index: 3;
         }
 
         .avatarHint {
